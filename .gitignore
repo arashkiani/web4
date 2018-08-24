@@ -5,7 +5,8 @@
 #   git config --global core.excludesfile ~/.gitignore_global
 
 /tmp
-node_modules
+/node_modules
 npm-debug.log
 .npm/
-packages/
+/packages/
+/dist/
