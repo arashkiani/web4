@@ -1,0 +1,29 @@
+{
+  "name": "web37",
+  "version": "0.1.0",
+  "description": "",
+  "author": "arash <cryptoarashk@gmail.com>",
+  "main": "./lib/web37.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arashkiani/web37.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arashkiani/web37/issues"
+  },
+  "homepage": "https://github.com/arashkiani/web37#readme",
+  "dependencies": {
+    "web3": "^1.0.0-beta.35"
+  },
+  "devDependencies": {
+    "babel-cli": "6",
+    "babel-preset-es2015": "6"
+  }
+}
