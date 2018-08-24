@@ -1,14 +1,12 @@
-import _ from 'web3'
-
 function Web37(){
+  this.num = 0;
   const test = (obj) =>{
     console.log(obj)
     return this
   }
 }
-
-Web37.prototype.setProvider = (a,b)=> {
-  console.log(a+b)
-};
-
-export default Web37 
+/*
+Web37.prototype.isConnected = function(){
+  return true
+};*/
+module.exports = Web37;

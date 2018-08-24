@@ -21,9 +21,7 @@
     "url": "https://github.com/arashkiani/web37/issues"
   },
   "homepage": "https://github.com/arashkiani/web37#readme",
-  "dependencies": {
-    "web3": "^1.0.0-beta.35"
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel-cli": "6",
     "babel-eslint": "^8.2.6",
@@ -44,6 +42,7 @@
     "jest": "^23.5.0",
     "prettier": "^1.14.2",
     "prettier-eslint": "^8.8.2",
+    "web3": "^1.0.0-beta.35",
     "webpack": "^4.17.1",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.5"

@@ -1,7 +1,7 @@
-import web37 from './web37.js'
-
+import web37 from './web37'
+//console.log(Web37())
 describe('web37', () => {
-  console.dir(web37)
+  console.log(web37)
   test(`Import`, () => {
     expect(1).toBe(1);
   });
