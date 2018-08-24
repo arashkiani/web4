@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: 'index.js',
+  entry: './index.js',
   output: {
     filename: 'web37.min.js',
     path: path.resolve(__dirname, 'dist')
@@ -29,7 +29,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./src/index.html",
+      inject: true,
+      template: "./template/index.html",
       filename: "./index.html"
     })
   ]

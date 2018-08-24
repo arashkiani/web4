@@ -1,8 +1,7 @@
-//var web37 = require('./src/web37');
-import web37 from './src/web37'
+var Web37 = require('./src/web37');
 // dont override global variable
-if (typeof window !== 'undefined' && typeof window.web37 === 'undefined') {
-    window.web37 = web37;
+if (typeof window !== 'undefined' && typeof window.Web37 === 'undefined') {
+    window.Web37 = Web37;
 }
 
-module.exports = web37;
+module.exports = Web37;
