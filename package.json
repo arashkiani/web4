@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "author": "arash <cryptoarashk@gmail.com>",
-  "main": "./lib/web37.js",
+  "main": "./index.js",
   "directories": {
     "lib": "lib"
   },

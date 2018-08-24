@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: './lib/web37.js',
+  entry: 'index.js',
   output: {
     filename: 'web37.min.js',
     path: path.resolve(__dirname, 'dist')
