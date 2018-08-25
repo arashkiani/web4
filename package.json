@@ -38,6 +38,7 @@
     "babel-preset-react": "^6.24.1",
     "check-dependencies": "^1.1.0",
     "eslint": "^5.4.0",
+    "eslint-plugin-flow": "^2.29.1",
     "eslint-plugin-jest": "^21.22.0",
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-standard": "^3.1.0",

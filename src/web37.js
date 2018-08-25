@@ -4,7 +4,7 @@ import web3 from 'web3'
 export default class Web37 extends web3 {
 	constructor() {
 		console.log('adasdasd')
-		console.log('sadasdasd')
+		console.log('adasdasd')
 		super()
 		this.interface = []
 

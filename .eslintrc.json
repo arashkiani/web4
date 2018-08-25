@@ -12,6 +12,7 @@
     },
     "plugins": [
         "standard",
+        "flow",
         "prettier",
         "jest"
     ],
