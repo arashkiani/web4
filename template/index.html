@@ -16,7 +16,9 @@
       }
     }
     ready(function () {
-      Web37()
+      const web37 = new Web37.default
+      web37.init('a','b','c')
+      web37.compile()
     })
   </script>
 </body>

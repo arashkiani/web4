@@ -1,0 +1,95 @@
+root: true
+
+parser: babel-eslint
+extends:
+  # https: //github.com/gajus/eslint-plugin-flowtype
+  - plugin:flowtype/recommended
+  # https: //www.npmjs.com/package/eslint-plugin-jest
+  - plugin:jest/recommended
+  # https: //github.com/prettier/eslint-config-prettier
+  - prettier
+  - prettier/flowtype
+
+plugins:
+  - import
+  - jest
+  - flowtype
+  # https: //github.com/prettier/eslint-plugin-prettier
+  - prettier
+
+settings:
+  flowtype:
+    # with this option you do not have to add @flow in files
+    onlyFilesWithFlowAnnotation: true
+//semi: false
+
+env:
+  es6: true
+  browser: true
+  node: true
+  jasmine: true
+  jest: true
+  jest/globals: true
+
+# packageManager: "yarn"
+
+globals:
+  fetch: true
+  navigator: true
+  __DEV__: true
+  XMLHttpRequest: true
+  Generator: true
+
+parserOptions:
+  ecmaVersion: 2017
+  sourceType: module
+
+rules:
+  prettier/prettier:
+    - error
+    -
+      bracketSpacing: true
+      semi: false
+      useTabs: true
+      parser: "flow"
+      trailingComma: "es5"
+      arrowParens: "always"
+      singleQuote: true
+  ### Different from airbnb config
+
+  ### Styling ###
+
+  # Prefer new line before return
+  # http: //eslint.org/docs/rules/newline-before-return
+  newline-before-return: error # airbnb default: off
+
+  ### ES6 ###
+
+  ### Best practices ###
+  # require or disallow Yoda conditions
+  # https: //eslint.org/docs/rules/yoda
+  yoda: [error, never,
+  { exceptRange: true
+  }
+] # airbnb default: 'error'
+
+  # add culry braces all the time
+  # https: //eslint.org/docs/rules/curly
+  curly: [error, all
+] # airbnb default: [error, multi-line
+]
+
+
+  ### Import ###
+
+  # Require modules with a single export to use a default export
+  # https: //github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/prefer-default-export.md
+  import/prefer-default-export: off # airbnb default: 'error'
+
+  # https: //github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/imports-first.md
+  import/first: off # airbnb default: ['error', 'absolute-first'
+]
+
+  ### Debugging is allowed but not allowed to commit ###
+  no-console: warn # airbnb default: 'error'
+  no-debugger: warn # airbnb default: 'error'
