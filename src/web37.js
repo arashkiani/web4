@@ -61,47 +61,61 @@ export default class Web37 extends web3 {
 		this.errors = []
 		this.input = []
 		this.executables = []
+		//const web3 = new Web3(Web3.givenProvider)
 	}
 
 	init(callProps: CallType) {
 		this.call = callProps
 	}
-
+	/**
+	 * @param  {string} name
+	 * @param  {AbiType} abi
+	 * @param  {?string} address
+	 */
 	addInterface(name: string, abi: AbiType, address: ?string) {
 		const interfaceProps = { name, abi, address }
 		this.interfaces.push(interfaceProps)
 	}
-	/*
-	action
-	parameters
-	interfaceName
-	from
-	ampify
-	amount
-*/
+	/**
+	 * @param  {string} action
+	 * @param  {Object|boolean} parameters
+	 * @param  {string} interfaceName
+	 * @param  {?string} from
+	 * @param  {?number} ampify
+	 * @param  {?number} amount
+	 */
 	async execute(
 		action: string,
-		parameters: Array,
+		parameters: Object | boolean,
 		interfaceName: string,
 		from: ?string,
 		ampify: ?number,
 		amount: ?number
 	) {
 		const executables = Object.assign(this.executables)
-		const index = this._findIndex(executables, interfaceName)
-		if (index < 0) {
+		const executableIndex = this._findIndex(executables, interfaceName)
+		if (executableIndex < 0) {
 			return false
 		}
-		const instance = executables[index].methods[action].apply(null, parameters)
-		console.log(executables[index].methods[action])
-		const type = 'call' //'sendTransaction'
-		const input = executables[index].input
+
+		const instance = executables[executableIndex].methods[action].apply(
+			null,
+			parameters || {}
+		)
+
+		const actionIndex = this._findIndex(
+			executables[executableIndex].abi,
+			action
+		)
+		const abiAction = executables[executableIndex].abi[actionIndex]
+		const type = this._findActionType(abiAction.stateMutability)
+		const input = executables[executableIndex].input
 		if (type !== 'call') {
 			input.from = from
+			input.data = await instance.encodeABI()
 			input.gas = Math.round(
 				(await instance.estimateGas(input)) * ampify || 1.25
 			)
-			input.data = await instance.encodeABI()
 			if (amount) {
 				input.amount = this._toWei(amount)
 			}
@@ -109,48 +123,86 @@ export default class Web37 extends web3 {
 
 		return await instance[type].apply(null, input)
 	}
-
-	makeExecutable(interfaceName: string, input: InputType): boolean {
+	/**
+	 * @param  {string} interfaceName
+	 * @param  {InputType} input
+	 * @returns boolean
+	 */
+	generateExecutable(interfaceName: string, input: InputType): boolean {
 		const index = this._findIndex(this.interfaces, interfaceName)
 		if (index < 0) {
 			this.errors.push({ code: '0', msg: 'couldnt find the contract ...' })
 			return false
 		}
+		if (!input.to && this.interfaces[index].address) {
+			input.to = this.interfaces[index].address
+		}
+
 		const methods = new this.eth.Contract(
 			this.interfaces[index].abi,
 			input.to,
 			input
 		).methods
-		this.executables.push({ name: interfaceName, methods, input })
+		this.executables.push({
+			name: interfaceName,
+			methods,
+			abi: this.interfaces[index].abi,
+			input,
+		})
 		return true
 	}
-	_findActionType(executable) {
-		if (this.call.contractInterface[this.call.index].payable) {
-			this.call.type = 'sendTransaction'
-		} else if (
-			this.call.contractInterface[this.call.index].stateMutability ===
-			'nonpayable'
-		) {
-			this.call.type = 'send'
+	/**
+	 * @param  {'view'|'nonpayable'|'sendTransaction'} stateMutability
+	 * @returns string
+	 */
+	_findActionType(
+		stateMutability: 'view' | 'nonpayable' | 'sendTransaction'
+	): string {
+		console.log(stateMutability)
+		if (!stateMutability || stateMutability === 'view') {
+			return 'call'
+		} else if (stateMutability === 'nonpayable') {
+			return 'send'
 		} else {
-			this.type = 'call'
+			return 'sendTransaction'
 		}
 	}
-	_findIndex(data, option) {
+	/**
+	 * @param  {object} data
+	 * @param  {string} option
+	 * @returns number
+	 */
+	_findIndex(data: object, option: string): number {
 		return data.findIndex((o) => {
 			return o.name === option
 		})
 	}
-	_findPramsNumber() {}
-	_findInputData() {}
-	_findUserAddress() {}
 	_getAccounts() {
-		return web3.eth.getAccounts()
+		return this.eth.getAccounts()
 	}
-	_toWei(input) {
+
+	/**
+	 * @param  {number|string} input
+	 */
+	_toWei(input: number | string) {
 		return !input || !Number(input)
 			? 0
 			: this.utils.toWei(typeof input === 'string' ? input : input.toString())
+	}
+
+	/**
+	 * @param  {number|string} input
+	 * @param  {string='ether'} type
+	 */
+	_fromWei(input: number | string, type: string = 'ether') {
+		return Number(web3.utils.fromWei(input || '0', type))
+	}
+	/**
+	 * @param  {string} address
+	 * @param  {string='ether'} type
+	 */
+	_getUserBalance(address: string, type: string = 'ether') {
+		return this.fromWei(web3.eth.getBalance(address), type)
 	}
 	result() {
 		console.log(this)
@@ -160,16 +212,9 @@ export default class Web37 extends web3 {
 const web37 = new Web37()
 const { abi } = contractFile
 web37.addInterface('test', abi)
-web37.makeExecutable('test', {
+web37.generateExecutable('test', {
 	from: '0xcC6aADf0Db99295F02F85016968011Dbca742F1b',
 })
-/*
-	action
-	parameters
-	interfaceName
-	from
-	ampify
-	amount
-*/
+
 web37.execute('info', false, 'test')
 web37.result()
