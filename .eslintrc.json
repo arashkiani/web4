@@ -5,23 +5,26 @@
         "node": true,
         "jest": true
     },
-    "extends": "eslint:recommended",
+    "ecmaFeatures": {
+        "modules": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:flowtype/recommended"
+    ],
     "parserOptions": {
         "ecmaVersion": 2018,
         "sourceType": "module"
     },
     "plugins": [
         "standard",
-        "flow",
+        "flowtype",
         "prettier",
         "jest"
     ],
     "rules": {
         "space-before-function-paren": "off",
-        "prettier/prettier": "error",
-        "promise/catch-or-return": "error",
-        "promise/no-return-wrap": "error",
-        "promise/param-names": "error",
+        "prettier/prettier": "warn",
         "jest/no-disabled-tests": "warn",
         "jest/no-focused-tests": "error",
         "jest/no-identical-title": "error",

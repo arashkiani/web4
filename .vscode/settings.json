@@ -1,9 +1,6 @@
 {
-  "eslintIntegration": true,
   "editor.formatOnSave": true,
   "eslint.autoFixOnSave": true,
-  "eslint.alwaysShowStatus": true,
-  "eslint.server.trace": "some messages",
   "[javascript]": {
     "editor.formatOnSave": false
   },

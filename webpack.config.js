@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
+//const FlowWebpackPlugin = require('flow-webpack-plugin')
 
 module.exports = {
 	entry: './index.js',
@@ -33,6 +34,7 @@ module.exports = {
 		port: 8081,
 	},
 	plugins: [
+		//new FlowWebpackPlugin(),
 		new HtmlWebPackPlugin({
 			inject: true,
 			template: './template/index.html',
